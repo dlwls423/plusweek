@@ -13,10 +13,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "users")
+@Table(name = "tb_user")
 public class User {
 
     @Id
@@ -33,4 +31,12 @@ public class User {
 
     private Role role;
 
+    @Builder
+    private User(Long id, String username, String password, String email, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 }

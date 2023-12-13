@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class SignupRequestDto {
+public class UserSignupReq {
 
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$")

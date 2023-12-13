@@ -45,8 +45,6 @@ public class JwtUtil {
     }
 
 
-    // jwt 토큰 -> 1. header 2. payload 3. security key
-    //                 header + payload -> security key
     public String createToken(String username){ // username으로 토큰 만들기
         Date date = new Date();
 
@@ -83,7 +81,7 @@ public class JwtUtil {
         return false;
     }
 
-    public Claims getUserInforFromToken(String token){ // 토큰에서 유저 정보 가져오기
+    public Claims getUserInfoFromToken(String token){ // 토큰에서 유저 정보 가져오기
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }

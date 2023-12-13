@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     // validation 오류 처리
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDto> handleValidationError(MethodArgumentNotValidException ex){
+    public ResponseEntity<ErrorRes> handleValidationError(MethodArgumentNotValidException ex){
         BindingResult bindingResult = ex.getBindingResult();
         StringBuilder builder = new StringBuilder();
         for(FieldError fieldError : bindingResult.getFieldErrors()){
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
             builder.append(fieldError.getRejectedValue());
             builder.append("]");
         }
-        ErrorResponseDto responseDto = new ErrorResponseDto(HttpStatus.BAD_REQUEST, builder.toString());
+        ErrorRes responseDto = new ErrorRes(HttpStatus.BAD_REQUEST, builder.toString());
         return ResponseEntity.status(responseDto.getStatusCode()).body(responseDto);
     }
 
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
      * 쿼리스트링으로 받는 값 검증에 대한 예외 (@Validated)
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponseDto> handleValidatedError(ConstraintViolationException ex) {
+    public ResponseEntity<ErrorRes> handleValidatedError(ConstraintViolationException ex) {
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
         StringBuilder builder = new StringBuilder();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
@@ -49,14 +49,14 @@ public class GlobalExceptionHandler {
             builder.append(constraintViolation.getInvalidValue());
             builder.append("]");
         }
-        ErrorResponseDto responseDto = new ErrorResponseDto(HttpStatus.BAD_REQUEST,
+        ErrorRes responseDto = new ErrorRes(HttpStatus.BAD_REQUEST,
             builder.toString());
         return ResponseEntity.status(responseDto.getStatusCode()).body(responseDto);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponseDto> handleIllegalArgumentException(IllegalArgumentException ex){
-        ErrorResponseDto responseDto = new ErrorResponseDto(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ResponseEntity<ErrorRes> handleIllegalArgumentException(IllegalArgumentException ex){
+        ErrorRes responseDto = new ErrorRes(HttpStatus.BAD_REQUEST, ex.getMessage());
         return ResponseEntity.status(responseDto.getStatusCode()).body(responseDto);
     }
 }

@@ -5,12 +5,12 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class ErrorResponseDto {
+public class ErrorRes {
     private int statusCode;
     private String message;
 
     @Builder
-    public ErrorResponseDto(HttpStatus status, String message) {
+    public ErrorRes(HttpStatus status, String message) {
         this.statusCode = status.value();
         this.message = message;
     }

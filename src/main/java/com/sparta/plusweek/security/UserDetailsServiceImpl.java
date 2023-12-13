@@ -2,6 +2,7 @@ package com.sparta.plusweek.security;
 
 import com.sparta.plusweek.domain.user.entity.User;
 import com.sparta.plusweek.domain.user.repo.UserRepository;
+import com.sparta.plusweek.domain.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,8 +17,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException(username + "은 존재하지 않습니다."));
+        User user = userRepository.findByUsername(username);
+        UserValidator.validate(user);
         return new UserDetailsImpl(user);
     }
 }

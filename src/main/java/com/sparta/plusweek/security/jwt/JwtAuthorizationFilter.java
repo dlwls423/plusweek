@@ -1,7 +1,7 @@
 package com.sparta.plusweek.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.plusweek.common.exception.ErrorResponseDto;
+import com.sparta.plusweek.common.exception.ErrorRes;
 import com.sparta.plusweek.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -39,13 +39,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         if(StringUtils.hasText(tokenValue)){
             if(!jwtUtil.validateToken(tokenValue)){
-                String json = ob.writeValueAsString(new ErrorResponseDto(HttpStatus.UNAUTHORIZED, "토큰이 유효하지 않습니다."));
+                String json = ob.writeValueAsString(new ErrorRes(HttpStatus.UNAUTHORIZED, "토큰이 유효하지 않습니다."));
                 PrintWriter writer = response.getWriter();
                 writer.println(json);
                 return;
             }
 
-            Claims info = jwtUtil.getUserInforFromToken(tokenValue);
+            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
 
             try {
                 setAuthentication(info.getSubject());
