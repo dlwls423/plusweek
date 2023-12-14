@@ -1,5 +1,7 @@
 package com.sparta.plusweek.domain.user.service;
 
+import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
+import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
@@ -18,6 +20,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public UserConfirmUsernameRes confirmUsername(UserConfirmUsernameReq req) {
+        boolean duplicated = false;
+        if(userRepository.findByUsername(req.getUsername()) != null){
+            duplicated = true;
+        }
+        return UserConfirmUsernameRes.builder().duplicated(duplicated).build();
+    }
 
     public UserSignupRes signup(UserSignupReq req) {
         UserValidator.validate(req);
@@ -47,5 +57,4 @@ public class UserService {
 
         return UserServiceMapper.INSTANCE.toUserLoginRes(user);
     }
-
 }

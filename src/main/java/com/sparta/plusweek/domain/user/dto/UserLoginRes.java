@@ -12,8 +12,8 @@ public class UserLoginRes {
     private Role role;
 
     @Builder
-    private UserLoginRes(Long id, String username, String email, Role role) {
-        this.userId = id;
+    private UserLoginRes(Long userId, String username, String email, Role role) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.role = role;
