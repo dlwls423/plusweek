@@ -1,4 +1,4 @@
-package com.sparta.plusweek.common.exception;
+package com.sparta.plusweek.global.exception;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

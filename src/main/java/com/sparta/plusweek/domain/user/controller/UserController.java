@@ -5,7 +5,7 @@ import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
 import com.sparta.plusweek.domain.user.dto.UserSignupRes;
 import com.sparta.plusweek.domain.user.service.UserService;
-import com.sparta.plusweek.security.jwt.JwtUtil;
+import com.sparta.plusweek.global.security.jwt.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -14,8 +14,6 @@ import java.net.URLEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +30,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserSignupRes> signup(@RequestBody @Valid UserSignupReq req){
         UserSignupRes res = userService.signup(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(res);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @PostMapping("/login")

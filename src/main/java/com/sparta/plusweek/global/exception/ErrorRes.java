@@ -1,4 +1,4 @@
-package com.sparta.plusweek.common.exception;
+package com.sparta.plusweek.global.exception;
 
 import lombok.Builder;
 import lombok.Getter;

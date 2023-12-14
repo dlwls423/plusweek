@@ -1,4 +1,4 @@
-package com.sparta.plusweek.common;
+package com.sparta.plusweek.global;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

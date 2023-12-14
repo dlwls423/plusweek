@@ -20,11 +20,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserSignupRes signup(UserSignupReq req) {
-        String password = req.getPassword();
-        String confirmPassword = req.getConfirmPassword();
-        if(!password.equals(confirmPassword)){
-            throw new IllegalArgumentException("재확인 비밀번호와 일치하지 않습니다.");
-        }
+        UserValidator.validate(req);
 
         if(userRepository.findByUsername(req.getUsername()) != null){
             throw new IllegalArgumentException("중복된 닉네임입니다.");
@@ -32,7 +28,7 @@ public class UserService {
 
         User saveUser = userRepository.save(User.builder()
             .username(req.getUsername())
-            .password(passwordEncoder.encode(password))
+            .password(passwordEncoder.encode(req.getPassword()))
             .email(req.getEmail())
             .role(Role.ROLE_USER)
             .build());

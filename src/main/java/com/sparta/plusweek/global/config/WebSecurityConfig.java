@@ -1,13 +1,14 @@
-package com.sparta.plusweek.common.config;
+package com.sparta.plusweek.global.config;
 
-import com.sparta.plusweek.security.UserDetailsServiceImpl;
-import com.sparta.plusweek.security.jwt.JwtAuthorizationFilter;
-import com.sparta.plusweek.security.jwt.JwtUtil;
-import com.sparta.plusweek.security.exception.JwtExceptionHandleFilter;
+import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
+import com.sparta.plusweek.global.security.jwt.JwtAuthorizationFilter;
+import com.sparta.plusweek.global.security.jwt.JwtUtil;
+import com.sparta.plusweek.global.security.exception.JwtExceptionHandleFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -57,6 +58,7 @@ public class WebSecurityConfig {
             authorizeHttpRequests
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                 .requestMatchers("/v1/users/**").permitAll() // '/v1/users/'로 시작하는 요청 모두 접근 허가
+                .requestMatchers(HttpMethod.GET, "/v1/posts/**").permitAll()
                 .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 

@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
 
     @Column(nullable = false)
     private String username; // 닉네임
@@ -33,7 +33,7 @@ public class User {
 
     @Builder
     private User(Long id, String username, String password, String email, Role role) {
-        this.id = id;
+        this.userId = id;
         this.username = username;
         this.password = password;
         this.email = email;

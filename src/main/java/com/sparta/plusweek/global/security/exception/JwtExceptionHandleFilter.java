@@ -1,4 +1,4 @@
-package com.sparta.plusweek.security.exception;
+package com.sparta.plusweek.global.security.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;

@@ -1,4 +1,4 @@
-package com.sparta.plusweek.security.jwt;
+package com.sparta.plusweek.global.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

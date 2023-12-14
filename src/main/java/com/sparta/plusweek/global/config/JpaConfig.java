@@ -1,4 +1,4 @@
-package com.sparta.plusweek.common.config;
+package com.sparta.plusweek.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

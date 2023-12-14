@@ -1,4 +1,4 @@
-package com.sparta.plusweek.security;
+package com.sparta.plusweek.global.security;
 
 import com.sparta.plusweek.domain.user.entity.User;
 import com.sparta.plusweek.domain.user.repo.UserRepository;

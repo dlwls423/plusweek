@@ -1,8 +1,8 @@
-package com.sparta.plusweek.security.jwt;
+package com.sparta.plusweek.global.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.plusweek.common.exception.ErrorRes;
-import com.sparta.plusweek.security.UserDetailsServiceImpl;
+import com.sparta.plusweek.global.exception.ErrorRes;
+import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
