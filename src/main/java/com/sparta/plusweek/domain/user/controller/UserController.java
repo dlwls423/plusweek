@@ -49,14 +49,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
-    // 쿠키 읽어오기
-//    @GetMapping("/get-cookie")
-//    public String getCookie(@CookieValue(AUTHORIZATION_HEADER) String value) {
-//        System.out.println("value = " + value);
-//
-//        return "getCookie : " + value;
-//    }
-
     public static void addCookie(String cookieValue, HttpServletResponse res) {
         try {
             cookieValue = URLEncoder.encode(cookieValue, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행

@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
@@ -58,9 +59,16 @@ public class JwtUtil {
     }
 
     public String getJwtFromHeader(HttpServletRequest request){ // Header에서 Jwt 토큰 가져오기
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)){
-            return bearerToken.substring(7);
+        Cookie[] list = request.getCookies();
+        String bearerToken = "";
+        if(list == null) return null;
+        for(Cookie cookie:list) {
+            if(cookie.getName().equals(JwtUtil.AUTHORIZATION_HEADER)) {
+                bearerToken = cookie.getValue();
+            }
+        }
+        if(bearerToken.startsWith("Bearer")){ // 왜 막히지? StringUtils.hasText(bearerToken)
+            return bearerToken.substring(9);
         }
         return null;
     }

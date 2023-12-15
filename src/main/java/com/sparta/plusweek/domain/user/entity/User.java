@@ -29,7 +29,7 @@ public class User {
 
     private String email;
 
-    private Role role;
+    private Role role = Role.ROLE_USER;
 
     @Builder
     private User(Long id, String username, String password, String email, Role role) {

@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,14 +23,21 @@ public class Post extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 5000)
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
+    @Builder
+    public Post(Long postId, String title, String content, User user) {
+        this.postId = postId;
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 }
