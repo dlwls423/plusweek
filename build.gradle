@@ -39,8 +39,12 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 
+    // Map struct
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
