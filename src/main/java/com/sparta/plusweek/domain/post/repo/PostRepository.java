@@ -1,8 +1,15 @@
 package com.sparta.plusweek.domain.post.repo;
 
 import com.sparta.plusweek.domain.post.entity.Post;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.RepositoryDefinition;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+@RepositoryDefinition(domainClass = Post.class, idClass = Long.class)
+public interface PostRepository {
+
+    Post save(Post post);
+
+    Page<Post> findAll(Pageable pageable);
 
 }
