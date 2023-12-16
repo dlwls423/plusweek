@@ -3,6 +3,7 @@ package com.sparta.plusweek.domain.post.controller;
 import com.sparta.plusweek.domain.post.dto.PostCreatePostReq;
 import com.sparta.plusweek.domain.post.dto.PostCreatePostRes;
 import com.sparta.plusweek.domain.post.dto.PostGetAllPostsRes;
+import com.sparta.plusweek.domain.post.service.PostReadService;
 import com.sparta.plusweek.domain.post.service.PostService;
 import com.sparta.plusweek.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private final PostService postService;
+    private final PostReadService postReadService;
 
     @GetMapping()
     public ResponseEntity<Page<PostGetAllPostsRes>> getAllPosts(
@@ -31,7 +33,7 @@ public class PostController {
         @RequestParam("sortBy") String sortBy,
         @RequestParam("isAsc") boolean isAsc
     ) {
-        Page<PostGetAllPostsRes> res = postService.getAllPosts(page - 1, size, sortBy, isAsc);
+        Page<PostGetAllPostsRes> res = postReadService.getAllPosts(page - 1, size, sortBy, isAsc);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
