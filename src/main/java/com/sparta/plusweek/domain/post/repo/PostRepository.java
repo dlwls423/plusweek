@@ -12,4 +12,6 @@ public interface PostRepository {
 
     Page<Post> findAll(Pageable pageable);
 
+    Post findByPostId(Long postId);
+
 }

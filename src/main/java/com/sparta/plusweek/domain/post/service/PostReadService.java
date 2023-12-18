@@ -1,8 +1,10 @@
 package com.sparta.plusweek.domain.post.service;
 
 import com.sparta.plusweek.domain.post.dto.PostGetAllPostsRes;
+import com.sparta.plusweek.domain.post.dto.PostGetPostRes;
 import com.sparta.plusweek.domain.post.entity.Post;
 import com.sparta.plusweek.domain.post.repo.PostRepository;
+import com.sparta.plusweek.domain.post.validator.PostValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,5 +27,12 @@ public class PostReadService {
         Page<Post> postList = postRepository.findAll(pageable);
         return postList.map(PostServiceMapper.INSTANCE::toPostGetAllPostsRes);
     }
+
+    public PostGetPostRes getPost(Long postId) {
+        Post post = postRepository.findByPostId(postId);
+        PostValidator.validate(post);
+        return PostServiceMapper.INSTANCE.toPostGetPostRes(post);
+    }
+
 
 }
