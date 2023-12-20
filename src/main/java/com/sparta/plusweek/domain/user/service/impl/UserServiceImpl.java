@@ -25,20 +25,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserConfirmUsernameRes confirmUsername(UserConfirmUsernameReq req) {
-        boolean duplicated = false;
-        if (userRepository.findByUsername(req.getUsername()) != null) {
-            duplicated = true;
-        }
+        boolean duplicated = userRepository.findByUsername(req.getUsername()) != null;
         return UserConfirmUsernameRes.builder().duplicated(duplicated).build();
     }
 
     @Override
     public UserSignupRes signup(UserSignupReq req) {
         UserValidator.validate(req);
-
-        if (userRepository.findByUsername(req.getUsername()) != null) {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
-        }
+        User user = userRepository.findByUsername(req.getUsername());
+        UserValidator.checkIsDuplicatedName(user);
 
         User saveUser = userRepository.save(User.builder()
             .username(req.getUsername())
@@ -56,9 +51,7 @@ public class UserServiceImpl implements UserService {
         UserValidator.validate(user);
 
         String password = req.getPassword();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
+        UserValidator.verifyPassword(passwordEncoder, password, user.getPassword());
 
         return UserServiceMapper.INSTANCE.toUserLoginRes(user);
     }
