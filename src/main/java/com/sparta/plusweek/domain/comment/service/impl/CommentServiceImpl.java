@@ -58,4 +58,13 @@ public class CommentServiceImpl implements CommentService {
         return CommentServiceMapper.INSTANCE.toCommentUpdateRes(
             commentReadService.getCommentEntity(commentId));
     }
+
+    @Override
+    public void deleteComment(Long commentId, User user) {
+        Comment comment = commentReadService.getCommentEntity(commentId);
+
+        CommentValidator.checkCommentAuthor(comment, user);
+
+        commentRepository.delete(comment);
+    }
 }

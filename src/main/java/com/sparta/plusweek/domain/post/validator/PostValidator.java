@@ -12,7 +12,7 @@ public class PostValidator {
         }
     }
 
-    public static void validateUpdateReq(Post post, User user) {
+    public static void checkPostAuthor(Post post, User user) {
         if (!Objects.equals(post.getUser().getUsername(), user.getUsername())) {
             throw new IllegalArgumentException("요청자의 게시글이 아닙니다.");
         }

@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService {
     public PostUpdateRes updatePost(Long postId, PostUpdateReq req, User user) {
         Post post = postReadService.getPostEntity(postId);
 
-        PostValidator.validateUpdateReq(post, user);
+        PostValidator.checkPostAuthor(post, user);
 
         postRepository.save(Post.builder()
             .postId(postId)
@@ -54,7 +54,7 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long postId, User user) {
         Post post = postReadService.getPostEntity(postId);
 
-        PostValidator.validateUpdateReq(post, user);
+        PostValidator.checkPostAuthor(post, user);
 
         postRepository.delete(post);
     }

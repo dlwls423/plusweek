@@ -14,4 +14,6 @@ public interface CommentService {
 
     CommentUpdateRes updateComment(Long commentId, CommentUpdateReq req, User user);
 
+    void deleteComment(Long commentId, User user);
+
 }
