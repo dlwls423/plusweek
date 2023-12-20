@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,10 @@ public class Like extends TimeStamp {
     @ManyToOne
     @JoinColumn(name = "postId")
     private Post post;
+
+    @Builder
+    public Like(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 }
