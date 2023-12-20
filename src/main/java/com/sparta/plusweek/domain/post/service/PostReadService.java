@@ -30,9 +30,13 @@ public class PostReadService {
 
     public PostGetRes getPost(Long postId) {
         Post post = postRepository.findByPostId(postId);
-        PostValidator.validate(post);
         return PostServiceMapper.INSTANCE.toPostGetRes(post);
     }
 
+    public Post getPostEntity(Long postId) {
+        Post post = postRepository.findByPostId(postId);
+        PostValidator.validate(post);
+        return post;
+    }
 
 }

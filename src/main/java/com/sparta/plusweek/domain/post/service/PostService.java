@@ -17,6 +17,8 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    private final PostReadService postReadService;
+
     public PostCreateRes createPost(PostCreateReq req, User user) {
         Post savePost = postRepository.save(Post.builder()
             .title(req.getTitle())
@@ -29,7 +31,7 @@ public class PostService {
     }
 
     public PostUpdateRes updatePost(Long postId, PostUpdateReq req, User user) {
-        Post post = postRepository.findByPostId(postId);
+        Post post = postReadService.getPostEntity(postId);
 
         PostValidator.validateUpdateReq(post, user);
 
@@ -45,7 +47,7 @@ public class PostService {
     }
 
     public void deletePost(Long postId, User user) {
-        Post post = postRepository.findByPostId(postId);
+        Post post = postReadService.getPostEntity(postId);
 
         PostValidator.validateUpdateReq(post, user);
 
