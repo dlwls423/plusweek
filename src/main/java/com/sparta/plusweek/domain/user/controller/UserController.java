@@ -7,7 +7,7 @@ import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
 import com.sparta.plusweek.domain.user.dto.UserSignupRes;
 import com.sparta.plusweek.domain.user.service.UserService;
-import com.sparta.plusweek.global.security.jwt.JwtUtil;
+import com.sparta.plusweek.global.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,19 +30,21 @@ public class UserController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/signup/username")
-    public ResponseEntity<UserConfirmUsernameRes> confirmUsername(@RequestBody UserConfirmUsernameReq req){
+    public ResponseEntity<UserConfirmUsernameRes> confirmUsername(
+        @RequestBody UserConfirmUsernameReq req) {
         UserConfirmUsernameRes res = userService.confirmUsername(req);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserSignupRes> signup(@RequestBody @Valid UserSignupReq req){
+    public ResponseEntity<UserSignupRes> signup(@RequestBody @Valid UserSignupReq req) {
         UserSignupRes res = userService.signup(req);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginRes> login(@RequestBody UserLoginReq req, HttpServletResponse response){
+    public ResponseEntity<UserLoginRes> login(@RequestBody UserLoginReq req,
+        HttpServletResponse response) {
         UserLoginRes res = userService.login(req);
         String token = jwtUtil.createToken(req.getUsername());
         addCookie(token, response);
@@ -51,7 +53,8 @@ public class UserController {
 
     public static void addCookie(String cookieValue, HttpServletResponse res) {
         try {
-            cookieValue = URLEncoder.encode(cookieValue, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
+            cookieValue = URLEncoder.encode(cookieValue, "utf-8")
+                .replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
 
             Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, cookieValue); // Name-Value
             cookie.setPath("/");

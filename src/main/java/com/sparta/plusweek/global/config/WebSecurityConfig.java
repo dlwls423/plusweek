@@ -1,8 +1,8 @@
 package com.sparta.plusweek.global.config;
 
+import com.sparta.plusweek.global.security.JwtAuthorizationFilter;
+import com.sparta.plusweek.global.security.JwtUtil;
 import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
-import com.sparta.plusweek.global.security.jwt.JwtAuthorizationFilter;
-import com.sparta.plusweek.global.security.jwt.JwtUtil;
 import com.sparta.plusweek.global.security.exception.JwtExceptionHandleFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -28,27 +28,28 @@ public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+        throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter(){
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
         return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
     }
 
     @Bean
-    public JwtExceptionHandleFilter jwtExceptionHandleFilter(){
+    public JwtExceptionHandleFilter jwtExceptionHandleFilter() {
         return new JwtExceptionHandleFilter();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf((csrf) -> csrf.disable());
 
         httpSecurity.sessionManagement((sessionManageMent) ->
@@ -56,13 +57,15 @@ public class WebSecurityConfig {
 
         httpSecurity.authorizeHttpRequests((authorizeHttpRequests) ->
             authorizeHttpRequests
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .permitAll() // resources 접근 허용 설정
                 .requestMatchers("/v1/users/**").permitAll() // '/v1/users/'로 시작하는 요청 모두 접근 허가
                 .requestMatchers(HttpMethod.GET, "/v1/posts/**").permitAll()
                 .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
-        httpSecurity.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtAuthorizationFilter(),
+            UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtExceptionHandleFilter(), JwtAuthorizationFilter.class);
 
         return httpSecurity.build();
