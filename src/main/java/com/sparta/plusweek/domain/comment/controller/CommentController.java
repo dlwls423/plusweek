@@ -2,8 +2,8 @@ package com.sparta.plusweek.domain.comment.controller;
 
 import com.sparta.plusweek.domain.comment.dto.CommentCreateReq;
 import com.sparta.plusweek.domain.comment.dto.CommentCreateRes;
-import com.sparta.plusweek.domain.comment.service.CommentReadService;
-import com.sparta.plusweek.domain.comment.service.CommentService;
+import com.sparta.plusweek.domain.comment.service.impl.CommentReadServiceImpl;
+import com.sparta.plusweek.domain.comment.service.impl.CommentServiceImpl;
 import com.sparta.plusweek.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CommentController {
 
-    private final CommentService commentService;
-    private final CommentReadService commentReadService;
+    private final CommentServiceImpl commentService;
+    private final CommentReadServiceImpl commentReadService;
 
     @PostMapping()
     public ResponseEntity<CommentCreateRes> createComment(
