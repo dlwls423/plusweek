@@ -15,6 +15,7 @@ import com.sparta.plusweek.domain.post.service.Impl.PostReadServiceImpl;
 import com.sparta.plusweek.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
     private final PostReadServiceImpl postReadService;
 
     @Override
+    @Transactional
     public CommentCreateRes createComment(CommentCreateReq req, User user) {
         Post post = postReadService.getPostEntity(req.getPostId());
 
@@ -36,24 +38,27 @@ public class CommentServiceImpl implements CommentService {
             .post(post)
             .build()
         );
+        post.addComments(saveComment);
 
         return CommentServiceMapper.INSTANCE.toCommentCreateRes(saveComment);
     }
 
     @Override
+    @Transactional
     public CommentUpdateRes updateComment(Long commentId, CommentUpdateReq req, User user) {
         Post post = postReadService.getPostEntity(req.getPostId());
         Comment comment = commentReadService.getCommentEntity(commentId);
 
         CommentValidator.checkCommentAuthor(comment, user);
 
-        commentRepository.save(Comment.builder()
+        Comment saveComment = commentRepository.save(Comment.builder()
             .commentId(commentId)
             .text(req.getText())
             .user(user)
             .post(post)
             .build()
         );
+        post.addComments(saveComment);
 
         return CommentServiceMapper.INSTANCE.toCommentUpdateRes(
             commentReadService.getCommentEntity(commentId));

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class PostReadServiceImpl implements PostReadService {
     }
 
     @Override
+    @Transactional
     public PostGetRes getPost(Long postId) {
         Post post = postRepository.findByPostId(postId);
         return PostServiceMapper.INSTANCE.toPostGetRes(post);

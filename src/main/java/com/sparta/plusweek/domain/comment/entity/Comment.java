@@ -41,6 +41,10 @@ public class Comment extends TimeStamp {
         this.commentId = commentId;
         this.text = text;
         this.user = user;
+        setPost(post);
+    }
+
+    public void setPost(Post post) {
         this.post = post;
     }
 }
