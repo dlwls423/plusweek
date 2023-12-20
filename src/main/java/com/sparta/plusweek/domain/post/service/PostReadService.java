@@ -1,7 +1,7 @@
 package com.sparta.plusweek.domain.post.service;
 
-import com.sparta.plusweek.domain.post.dto.PostGetAllPostsRes;
-import com.sparta.plusweek.domain.post.dto.PostGetPostRes;
+import com.sparta.plusweek.domain.post.dto.PostGetAllRes;
+import com.sparta.plusweek.domain.post.dto.PostGetRes;
 import com.sparta.plusweek.domain.post.entity.Post;
 import com.sparta.plusweek.domain.post.repo.PostRepository;
 import com.sparta.plusweek.domain.post.validator.PostValidator;
@@ -18,20 +18,20 @@ public class PostReadService {
 
     private final PostRepository postRepository;
 
-    public Page<PostGetAllPostsRes> getAllPosts(int page, int size, String sortBy, boolean isAsc) {
+    public Page<PostGetAllRes> getAllPosts(int page, int size, String sortBy, boolean isAsc) {
         // 페이징 처리
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<Post> postList = postRepository.findAll(pageable);
-        return postList.map(PostServiceMapper.INSTANCE::toPostGetAllPostsRes);
+        return postList.map(PostServiceMapper.INSTANCE::toPostGetAllRes);
     }
 
-    public PostGetPostRes getPost(Long postId) {
+    public PostGetRes getPost(Long postId) {
         Post post = postRepository.findByPostId(postId);
         PostValidator.validate(post);
-        return PostServiceMapper.INSTANCE.toPostGetPostRes(post);
+        return PostServiceMapper.INSTANCE.toPostGetRes(post);
     }
 
 

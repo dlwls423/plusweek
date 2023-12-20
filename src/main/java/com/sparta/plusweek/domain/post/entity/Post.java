@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "tb_post")
 public class Post extends TimeStamp {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postId;

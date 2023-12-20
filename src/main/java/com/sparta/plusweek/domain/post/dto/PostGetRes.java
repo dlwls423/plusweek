@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PostGetPostRes {
+public class PostGetRes {
+
     private Long postId;
     private String title;
     private String content;
@@ -15,7 +16,7 @@ public class PostGetPostRes {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public PostGetPostRes(Post post) {
+    public PostGetRes(Post post) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
