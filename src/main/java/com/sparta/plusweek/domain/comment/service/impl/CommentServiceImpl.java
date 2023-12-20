@@ -11,7 +11,7 @@ import com.sparta.plusweek.domain.comment.service.CommentService;
 import com.sparta.plusweek.domain.comment.service.CommentServiceMapper;
 import com.sparta.plusweek.domain.comment.validator.CommentValidator;
 import com.sparta.plusweek.domain.post.entity.Post;
-import com.sparta.plusweek.domain.post.service.Impl.PostReadServiceImpl;
+import com.sparta.plusweek.domain.post.service.impl.PostReadServiceImpl;
 import com.sparta.plusweek.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

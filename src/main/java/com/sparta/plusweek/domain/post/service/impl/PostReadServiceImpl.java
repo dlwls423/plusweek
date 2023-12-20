@@ -1,4 +1,4 @@
-package com.sparta.plusweek.domain.post.service.Impl;
+package com.sparta.plusweek.domain.post.service.impl;
 
 import com.sparta.plusweek.domain.post.dto.PostGetAllRes;
 import com.sparta.plusweek.domain.post.dto.PostGetRes;
