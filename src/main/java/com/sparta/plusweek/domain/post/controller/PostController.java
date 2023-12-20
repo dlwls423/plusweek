@@ -6,8 +6,8 @@ import com.sparta.plusweek.domain.post.dto.PostGetAllRes;
 import com.sparta.plusweek.domain.post.dto.PostGetRes;
 import com.sparta.plusweek.domain.post.dto.PostUpdateReq;
 import com.sparta.plusweek.domain.post.dto.PostUpdateRes;
-import com.sparta.plusweek.domain.post.service.Impl.PostReadServiceImpl;
-import com.sparta.plusweek.domain.post.service.Impl.PostServiceImpl;
+import com.sparta.plusweek.domain.post.service.PostReadService;
+import com.sparta.plusweek.domain.post.service.PostService;
 import com.sparta.plusweek.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostServiceImpl postService;
-    private final PostReadServiceImpl postReadService;
+    private final PostService postService;
+    private final PostReadService postReadService;
 
     @GetMapping()
     public ResponseEntity<Page<PostGetAllRes>> getAllPosts(

@@ -6,7 +6,7 @@ import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
 import com.sparta.plusweek.domain.user.dto.UserSignupRes;
-import com.sparta.plusweek.domain.user.service.impl.UserServiceImpl;
+import com.sparta.plusweek.domain.user.service.UserService;
 import com.sparta.plusweek.global.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/signup/username")
