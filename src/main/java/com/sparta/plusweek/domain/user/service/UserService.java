@@ -23,7 +23,7 @@ public class UserService {
 
     public UserConfirmUsernameRes confirmUsername(UserConfirmUsernameReq req) {
         boolean duplicated = false;
-        if(userRepository.findByUsername(req.getUsername()) != null){
+        if (userRepository.findByUsername(req.getUsername()) != null) {
             duplicated = true;
         }
         return UserConfirmUsernameRes.builder().duplicated(duplicated).build();
@@ -32,7 +32,7 @@ public class UserService {
     public UserSignupRes signup(UserSignupReq req) {
         UserValidator.validate(req);
 
-        if(userRepository.findByUsername(req.getUsername()) != null){
+        if (userRepository.findByUsername(req.getUsername()) != null) {
             throw new IllegalArgumentException("중복된 닉네임입니다.");
         }
 
@@ -43,7 +43,7 @@ public class UserService {
             .role(Role.ROLE_USER)
             .build());
 
-         return UserServiceMapper.INSTANCE.toUserSignupRes(saveUser);
+        return UserServiceMapper.INSTANCE.toUserSignupRes(saveUser);
     }
 
     public UserLoginRes login(UserLoginReq req) {
