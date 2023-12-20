@@ -37,6 +37,7 @@ public class PostReadServiceImpl implements PostReadService {
         return PostServiceMapper.INSTANCE.toPostGetRes(post);
     }
 
+    @Override
     public Post getPostEntity(Long postId) {
         Post post = postRepository.findByPostId(postId);
         PostValidator.validate(post);

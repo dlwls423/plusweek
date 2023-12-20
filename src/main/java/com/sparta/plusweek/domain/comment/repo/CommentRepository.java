@@ -7,4 +7,6 @@ import org.springframework.data.repository.RepositoryDefinition;
 public interface CommentRepository {
 
     Comment save(Comment comment);
+
+    Comment findByCommentId(Long commentId);
 }

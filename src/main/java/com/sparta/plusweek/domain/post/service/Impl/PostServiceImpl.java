@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
             .build()
         );
 
-        return PostServiceMapper.INSTANCE.toPostUpdateRes(postRepository.findByPostId(postId));
+        return PostServiceMapper.INSTANCE.toPostUpdateRes(postReadService.getPostEntity(postId));
     }
 
     @Override
