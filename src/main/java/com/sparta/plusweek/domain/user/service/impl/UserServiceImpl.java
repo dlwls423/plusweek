@@ -2,6 +2,7 @@ package com.sparta.plusweek.domain.user.service.impl;
 
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
+import com.sparta.plusweek.domain.user.dto.UserEmailCodeReq;
 import com.sparta.plusweek.domain.user.dto.UserEmailReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
@@ -35,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void sendMail(UserEmailReq req) {
         emailUtil.sendMessage(req.getEmail(), "이메일 인증");
+    }
+
+    @Override
+    public void verifyCode(UserEmailCodeReq req) {
+        emailUtil.checkCode(req.getEmail(), req.getCode());
     }
 
     @Override

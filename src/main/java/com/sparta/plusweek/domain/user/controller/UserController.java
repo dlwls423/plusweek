@@ -2,6 +2,7 @@ package com.sparta.plusweek.domain.user.controller;
 
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
+import com.sparta.plusweek.domain.user.dto.UserEmailCodeReq;
 import com.sparta.plusweek.domain.user.dto.UserEmailReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
@@ -41,6 +42,12 @@ public class UserController {
     public ResponseEntity<Void> sendMail(@RequestBody UserEmailReq req) {
         userService.sendMail(req);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/signup/code")
+    public ResponseEntity<String> verifyCode(@RequestBody UserEmailCodeReq req) {
+        userService.verifyCode(req);
+        return ResponseEntity.ok().body("이메일 인증에 성공하였습니다.");
     }
 
     @PostMapping("/signup")

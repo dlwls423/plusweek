@@ -2,6 +2,7 @@ package com.sparta.plusweek.domain.user.service;
 
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
+import com.sparta.plusweek.domain.user.dto.UserEmailCodeReq;
 import com.sparta.plusweek.domain.user.dto.UserEmailReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
@@ -19,4 +20,6 @@ public interface UserService {
     UserLoginRes login(UserLoginReq req);
 
     void sendMail(UserEmailReq req);
+
+    void verifyCode(UserEmailCodeReq req);
 }

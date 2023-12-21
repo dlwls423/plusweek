@@ -49,14 +49,12 @@ public class EmailUtil {
         }
     }
 
-    public boolean checkCode(String to, String code) {
-        try {
-            AuthEmail emailAuth = emailService.findById(to)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 찾을 수 없습니다."));
+    public void checkCode(String email, String code) {
+        AuthEmail emailAuth = emailService.findById(email)
+            .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 찾을 수 없습니다."));
 
-            return emailAuth.getCode().equals(code);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("유효하지 않은 인증코드 입니다.");
+        if (!emailAuth.getCode().equals(code)) {
+            throw new IllegalArgumentException("인증코드가 일치하지 않습니다.");
         }
     }
 
