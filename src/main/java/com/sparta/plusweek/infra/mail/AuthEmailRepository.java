@@ -1,4 +1,4 @@
-package com.sparta.plusweek.global.mail;
+package com.sparta.plusweek.infra.mail;
 
 import org.springframework.data.repository.CrudRepository;
 

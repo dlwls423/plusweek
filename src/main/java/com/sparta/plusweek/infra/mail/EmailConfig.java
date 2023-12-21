@@ -1,4 +1,4 @@
-package com.sparta.plusweek.global.mail;
+package com.sparta.plusweek.infra.mail;
 
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;

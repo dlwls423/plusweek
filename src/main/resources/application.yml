@@ -1,27 +1,26 @@
 spring:
-  # H2 Database ??
+  # H2 Database
   datasource:
     driver-class-name: org.h2.Driver
-    url: 'jdbc:h2:mem:test'   # H2 DB ?? ?? (In-Memory Mode)
-    #url: 'jdbc:h2:~/test'    # H2 DB ?? ?? (Embedded Mode)
+    url: 'jdbc:h2:mem:test'
 
-  # H2 Console ??
+  # H2 Console
   h2:
-    console: # H2 DB? ??? ??? ? ?? ??
-      enabled: true           # H2 Console ?? ??
-      path: /h2-console       # H2 Console ?? ??
+    console:
+      enabled: true
+      path: /h2-console
 
-  # JPA ??
+  # JPA
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create        # DB ??? ?? (none, create, create-drop, update, validate)
+      ddl-auto: create        # (none, create, create-drop, update, validate)
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true      # ?? ?? ?? (??)
-        show_sql: true        # ?? ?? ??
+        format_sql: true
+        show_sql: true
 
   data:
     redis:
@@ -44,3 +43,16 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+
+cloud:
+  aws:
+    s3:
+      bucket: plusweekbucket
+    credentials:
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_ACCESS_KEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

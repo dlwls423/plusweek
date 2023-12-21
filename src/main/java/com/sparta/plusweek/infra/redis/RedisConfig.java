@@ -1,4 +1,4 @@
-package com.sparta.plusweek.global.redis;
+package com.sparta.plusweek.infra.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

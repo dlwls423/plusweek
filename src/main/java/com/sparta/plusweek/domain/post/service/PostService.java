@@ -6,11 +6,12 @@ import com.sparta.plusweek.domain.post.dto.PostUpdateReq;
 import com.sparta.plusweek.domain.post.dto.PostUpdateRes;
 import com.sparta.plusweek.domain.user.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface PostService {
 
-    PostCreateRes createPost(PostCreateReq req, User user);
+    PostCreateRes createPost(PostCreateReq req, MultipartFile multipartfile, User user);
 
     PostUpdateRes updatePost(Long postId, PostUpdateReq req, User user);
 
