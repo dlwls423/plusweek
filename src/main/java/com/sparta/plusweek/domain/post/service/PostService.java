@@ -13,7 +13,8 @@ public interface PostService {
 
     PostCreateRes createPost(PostCreateReq req, MultipartFile multipartfile, User user);
 
-    PostUpdateRes updatePost(Long postId, PostUpdateReq req, User user);
+    PostUpdateRes updatePost(Long postId, PostUpdateReq req, MultipartFile multipartfile,
+        User user);
 
     void deletePost(Long postId, User user);
 }

@@ -11,7 +11,7 @@ public class PostCreateRes {
     private Long postId;
     private String title;
     private String content;
-    private String image;
+    private String imageUrl;
     private String username;
     private LocalDateTime createdAt;
 
@@ -20,7 +20,7 @@ public class PostCreateRes {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.image = post.getImageUrl();
+        this.imageUrl = post.getImageUrl();
         this.username = post.getUser().getUsername();
         this.createdAt = post.getCreatedAt();
     }

@@ -2,7 +2,6 @@ package com.sparta.plusweek.infra.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +19,7 @@ public class S3Util {
     private String bucketName;
 
     public String uploadImage(MultipartFile multipartFile) {
-
-        String fileName = createFileName(multipartFile.getOriginalFilename());
+        String fileName = multipartFile.getOriginalFilename();
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
@@ -35,20 +33,20 @@ public class S3Util {
         return amazonS3Client.getUrl(bucketName, fileName).toString();
     }
 
-    public void deleteImage(String fileName) {
+    public void deleteImage(String imageUrl) {
+        String fileName = getFileNameFromImageUrl(imageUrl);
         if (fileName.isBlank() || !amazonS3Client.doesObjectExist(bucketName, fileName)) {
             throw new IllegalArgumentException("해당 파일을 찾을 수 없습니다.");
         }
         amazonS3Client.deleteObject(bucketName, fileName);
-
     }
 
-    public boolean existsImage(String fileName) {
-        return amazonS3Client.doesObjectExist(bucketName, fileName);
+    public String getFileNameFromImageUrl(String imageUrl) {
+        return imageUrl.substring(imageUrl.lastIndexOf(".com/") + 5);
     }
 
-    private String createFileName(String fileName) {
-        return UUID.randomUUID().toString().concat(fileName);
-    }
+//    private String createFileName(String fileName) {
+//        return UUID.randomUUID().toString().concat(fileName);
+//    }
 
 }

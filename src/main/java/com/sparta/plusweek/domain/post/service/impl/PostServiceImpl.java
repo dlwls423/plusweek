@@ -44,15 +44,25 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostUpdateRes updatePost(Long postId, PostUpdateReq req, User user) {
+    public PostUpdateRes updatePost(Long postId, PostUpdateReq req, MultipartFile multipartfile,
+        User user) {
         Post post = postReadService.getPostEntity(postId);
 
         PostValidator.checkPostAuthor(post, user);
+
+        String imageUrl = post.getImageUrl();
+        if (!imageUrl.isEmpty()) {
+            s3Util.deleteImage(post.getImageUrl());
+        }
+        if (!multipartfile.isEmpty()) {
+            imageUrl = s3Util.uploadImage(multipartfile);
+        }
 
         postRepository.save(Post.builder()
             .postId(postId)
             .title(req.getTitle())
             .content(req.getContent())
+            .imageUrl(imageUrl)
             .user(user)
             .build()
         );
@@ -66,6 +76,7 @@ public class PostServiceImpl implements PostService {
 
         PostValidator.checkPostAuthor(post, user);
 
+        s3Util.deleteImage(post.getImageUrl());
         postRepository.delete(post);
     }
 }
