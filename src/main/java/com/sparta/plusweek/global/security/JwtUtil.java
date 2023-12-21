@@ -1,4 +1,4 @@
-package com.sparta.plusweek.global.security.jwt;
+package com.sparta.plusweek.global.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,7 +17,6 @@ import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Slf4j(topic = "JwtUtil")
 @Component
@@ -40,13 +39,13 @@ public class JwtUtil {
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     @PostConstruct // 1회만 실행되는 메소드
-    public void init(){
+    public void init() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes); // 우리가 가지고 있는 키로 사용할 키 만들기
     }
 
 
-    public String createToken(String username){ // username으로 토큰 만들기
+    public String createToken(String username) { // username으로 토큰 만들기
         Date date = new Date();
 
         return BEARER_PREFIX +
@@ -58,22 +57,24 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getJwtFromHeader(HttpServletRequest request){ // Header에서 Jwt 토큰 가져오기
+    public String getJwtFromHeader(HttpServletRequest request) { // Header에서 Jwt 토큰 가져오기
         Cookie[] list = request.getCookies();
         String bearerToken = "";
-        if(list == null) return null;
-        for(Cookie cookie:list) {
-            if(cookie.getName().equals(JwtUtil.AUTHORIZATION_HEADER)) {
+        if (list == null) {
+            return null;
+        }
+        for (Cookie cookie : list) {
+            if (cookie.getName().equals(JwtUtil.AUTHORIZATION_HEADER)) {
                 bearerToken = cookie.getValue();
             }
         }
-        if(bearerToken.startsWith("Bearer")){ // 왜 막히지? StringUtils.hasText(bearerToken)
+        if (bearerToken.startsWith("Bearer")) { // 왜 막히지? StringUtils.hasText(bearerToken)
             return bearerToken.substring(9);
         }
         return null;
     }
 
-    public boolean validateToken(String token){ // 토큰 검증
+    public boolean validateToken(String token) { // 토큰 검증
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
@@ -89,7 +90,7 @@ public class JwtUtil {
         return false;
     }
 
-    public Claims getUserInfoFromToken(String token){ // 토큰에서 유저 정보 가져오기
+    public Claims getUserInfoFromToken(String token) { // 토큰에서 유저 정보 가져오기
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }

@@ -1,9 +1,9 @@
 package com.sparta.plusweek.domain.post.service;
 
-import com.sparta.plusweek.domain.post.dto.PostCreatePostRes;
-import com.sparta.plusweek.domain.post.dto.PostGetAllPostsRes;
-import com.sparta.plusweek.domain.post.dto.PostGetPostRes;
-import com.sparta.plusweek.domain.post.dto.PostUpdatePostRes;
+import com.sparta.plusweek.domain.post.dto.PostCreateRes;
+import com.sparta.plusweek.domain.post.dto.PostGetAllRes;
+import com.sparta.plusweek.domain.post.dto.PostGetRes;
+import com.sparta.plusweek.domain.post.dto.PostUpdateRes;
 import com.sparta.plusweek.domain.post.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,11 +13,11 @@ public interface PostServiceMapper {
 
     PostServiceMapper INSTANCE = Mappers.getMapper(PostServiceMapper.class);
 
-    PostGetAllPostsRes toPostGetAllPostsRes(Post post);
+    PostGetAllRes toPostGetAllRes(Post post);
 
-    PostGetPostRes toPostGetPostRes(Post post);
+    PostGetRes toPostGetRes(Post post);
 
-    PostCreatePostRes toPostCreatePostRes(Post post);
+    PostCreateRes toPostCreateRes(Post post);
 
-    PostUpdatePostRes toPostUpdatePostRes(Post post);
+    PostUpdateRes toPostUpdateRes(Post post);
 }

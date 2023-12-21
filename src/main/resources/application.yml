@@ -13,6 +13,7 @@ spring:
 
   # JPA ??
   jpa:
+    open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create        # DB ??? ?? (none, create, create-drop, update, validate)

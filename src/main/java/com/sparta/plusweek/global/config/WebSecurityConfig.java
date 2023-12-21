@@ -1,9 +1,9 @@
 package com.sparta.plusweek.global.config;
 
+import com.sparta.plusweek.global.security.JwtAuthorizationFilter;
+import com.sparta.plusweek.global.security.JwtUtil;
 import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
 import com.sparta.plusweek.global.security.exception.JwtExceptionHandleFilter;
-import com.sparta.plusweek.global.security.jwt.JwtAuthorizationFilter;
-import com.sparta.plusweek.global.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                 .permitAll() // resources 접근 허용 설정
                 .requestMatchers("/v1/users/**").permitAll() // '/v1/users/'로 시작하는 요청 모두 접근 허가
                 .requestMatchers(HttpMethod.GET, "/v1/posts/**").permitAll()
-                .requestMatchers("/v1/email/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/comments/**").permitAll()
                 .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 

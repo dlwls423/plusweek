@@ -6,16 +6,19 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PostGetAllPostsRes {
+public class PostCreateRes {
+
     private Long postId;
     private String title;
+    private String content;
     private String username;
     private LocalDateTime createdAt;
 
     @Builder
-    public PostGetAllPostsRes(Post post) {
+    public PostCreateRes(Post post) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
+        this.content = post.getContent();
         this.username = post.getUser().getUsername();
         this.createdAt = post.getCreatedAt();
     }

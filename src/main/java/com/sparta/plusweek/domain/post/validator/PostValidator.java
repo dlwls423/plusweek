@@ -3,9 +3,7 @@ package com.sparta.plusweek.domain.post.validator;
 import com.sparta.plusweek.domain.post.entity.Post;
 import com.sparta.plusweek.domain.user.entity.User;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class PostValidator {
 
     public static void validate(Post post) {
@@ -14,14 +12,13 @@ public class PostValidator {
         }
     }
 
-    private static boolean checkIsNull(Post post) {
-        return post == null;
-    }
-
-    public static void validateUpdateReq(Post post, User user) {
-        validate(post);
+    public static void checkPostAuthor(Post post, User user) {
         if (!Objects.equals(post.getUser().getUsername(), user.getUsername())) {
             throw new IllegalArgumentException("요청자의 게시글이 아닙니다.");
         }
+    }
+
+    private static boolean checkIsNull(Post post) {
+        return post == null;
     }
 }

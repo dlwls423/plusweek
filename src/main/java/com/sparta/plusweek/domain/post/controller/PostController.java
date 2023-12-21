@@ -1,11 +1,11 @@
 package com.sparta.plusweek.domain.post.controller;
 
-import com.sparta.plusweek.domain.post.dto.PostCreatePostReq;
-import com.sparta.plusweek.domain.post.dto.PostCreatePostRes;
-import com.sparta.plusweek.domain.post.dto.PostGetAllPostsRes;
-import com.sparta.plusweek.domain.post.dto.PostGetPostRes;
-import com.sparta.plusweek.domain.post.dto.PostUpdatePostReq;
-import com.sparta.plusweek.domain.post.dto.PostUpdatePostRes;
+import com.sparta.plusweek.domain.post.dto.PostCreateReq;
+import com.sparta.plusweek.domain.post.dto.PostCreateRes;
+import com.sparta.plusweek.domain.post.dto.PostGetAllRes;
+import com.sparta.plusweek.domain.post.dto.PostGetRes;
+import com.sparta.plusweek.domain.post.dto.PostUpdateReq;
+import com.sparta.plusweek.domain.post.dto.PostUpdateRes;
 import com.sparta.plusweek.domain.post.service.PostReadService;
 import com.sparta.plusweek.domain.post.service.PostService;
 import com.sparta.plusweek.global.security.UserDetailsImpl;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,42 +33,51 @@ public class PostController {
     private final PostReadService postReadService;
 
     @GetMapping()
-    public ResponseEntity<Page<PostGetAllPostsRes>> getAllPosts(
+    public ResponseEntity<Page<PostGetAllRes>> getAllPosts(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
         @RequestParam("sortBy") String sortBy,
         @RequestParam("isAsc") boolean isAsc
     ) {
-        Page<PostGetAllPostsRes> res = postReadService.getAllPosts(page - 1, size, sortBy, isAsc);
+        Page<PostGetAllRes> res = postReadService.getAllPosts(page - 1, size, sortBy, isAsc);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostGetPostRes> getPost(
+    public ResponseEntity<PostGetRes> getPost(
         @PathVariable(name = "postId") Long postId
     ) {
-        PostGetPostRes res = postReadService.getPost(postId);
+        PostGetRes res = postReadService.getPost(postId);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
 
     @PostMapping()
-    public ResponseEntity<PostCreatePostRes> createPost(
-        @RequestBody PostCreatePostReq req,
+    public ResponseEntity<PostCreateRes> createPost(
+        @RequestBody PostCreateReq req,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        PostCreatePostRes res = postService.createPost(req, userDetails.getUser());
+        PostCreateRes res = postService.createPost(req, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<PostUpdatePostRes> updatePost(
+    public ResponseEntity<PostUpdateRes> updatePost(
         @PathVariable(name = "postId") Long postId,
-        @RequestBody PostUpdatePostReq req,
+        @RequestBody PostUpdateReq req,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        PostUpdatePostRes res = postService.updatePost(postId, req, userDetails.getUser());
+        PostUpdateRes res = postService.updatePost(postId, req, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(
+        @PathVariable(name = "postId") Long postId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        postService.deletePost(postId, userDetails.getUser());
+        return ResponseEntity.noContent().build();
     }
 
 

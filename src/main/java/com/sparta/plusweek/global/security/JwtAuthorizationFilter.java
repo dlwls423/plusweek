@@ -1,8 +1,7 @@
-package com.sparta.plusweek.global.security.jwt;
+package com.sparta.plusweek.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.plusweek.global.exception.ErrorRes;
-import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,12 +33,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain filterChain) throws ServletException, IOException {
         String tokenValue = jwtUtil.getJwtFromHeader(request);
 
-        if(StringUtils.hasText(tokenValue)){
-            if(!jwtUtil.validateToken(tokenValue)){
-                String json = ob.writeValueAsString(new ErrorRes(HttpStatus.UNAUTHORIZED, "토큰이 유효하지 않습니다."));
+        if (StringUtils.hasText(tokenValue)) {
+            if (!jwtUtil.validateToken(tokenValue)) {
+                String json = ob.writeValueAsString(
+                    new ErrorRes(HttpStatus.UNAUTHORIZED, "토큰이 유효하지 않습니다."));
                 PrintWriter writer = response.getWriter();
                 writer.println(json);
                 return;
@@ -49,7 +50,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
             try {
                 setAuthentication(info.getSubject());
-            } catch (Exception e){
+            } catch (Exception e) {
                 log.error(e.getMessage());
                 return;
             }
@@ -57,7 +58,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void setAuthentication(String username){
+    private void setAuthentication(String username) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication = createAuthentication(username);
         context.setAuthentication(authentication);
@@ -65,7 +66,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         SecurityContextHolder.setContext(context);
     }
 
-    private Authentication createAuthentication(String username){
+    private Authentication createAuthentication(String username) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null,
             userDetails.getAuthorities());
