@@ -14,6 +14,7 @@ import com.sparta.plusweek.domain.user.repo.UserRepository;
 import com.sparta.plusweek.domain.user.service.UserService;
 import com.sparta.plusweek.domain.user.service.UserServiceMapper;
 import com.sparta.plusweek.domain.user.validator.UserValidator;
+import com.sparta.plusweek.global.mail.AuthEmail;
 import com.sparta.plusweek.global.mail.EmailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +49,7 @@ public class UserServiceImpl implements UserService {
         UserValidator.validate(req);
         User user = userRepository.findByUsername(req.getUsername());
         UserValidator.checkIsDuplicatedName(user);
+        checkAuthorizedEmail(req.getEmail());
 
         User saveUser = userRepository.save(User.builder()
             .username(req.getUsername())
@@ -68,5 +70,12 @@ public class UserServiceImpl implements UserService {
         UserValidator.verifyPassword(passwordEncoder, password, user.getPassword());
 
         return UserServiceMapper.INSTANCE.toUserLoginRes(user);
+    }
+
+    private void checkAuthorizedEmail(String email) {
+        AuthEmail authEmail = emailUtil.getAuthEmail(email);
+        if (!authEmail.isChecked()) {
+            throw new IllegalArgumentException(("이메일 인증을 완료해주세요."));
+        }
     }
 }

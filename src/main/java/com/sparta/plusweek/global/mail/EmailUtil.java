@@ -50,12 +50,25 @@ public class EmailUtil {
     }
 
     public void checkCode(String email, String code) {
-        AuthEmail emailAuth = emailService.findById(email)
-            .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 찾을 수 없습니다."));
+        AuthEmail emailAuth = getAuthEmail(email);
 
         if (!emailAuth.getCode().equals(code)) {
             throw new IllegalArgumentException("인증코드가 일치하지 않습니다.");
         }
+
+        emailService.delete(email);
+        AuthEmail newEmailAuth = AuthEmail.builder()
+            .email(email)
+            .code(code)
+            .isChecked(true)
+            .build();
+
+        emailService.save(newEmailAuth);
+    }
+
+    public AuthEmail getAuthEmail(String email) {
+        return emailService.findById(email)
+            .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 찾을 수 없습니다."));
     }
 
     private MimeMessage createMessage(String to, String subject, String code)

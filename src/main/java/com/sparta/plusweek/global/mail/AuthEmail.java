@@ -17,9 +17,12 @@ public class AuthEmail {
 
     private String code;
 
+    private boolean isChecked = false;
+
     @Builder
-    private AuthEmail(String email, String code) {
+    private AuthEmail(String email, String code, boolean isChecked) {
         this.email = email;
         this.code = code;
+        this.isChecked = isChecked;
     }
 }
