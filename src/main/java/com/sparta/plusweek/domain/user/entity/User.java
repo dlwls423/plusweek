@@ -1,6 +1,6 @@
 package com.sparta.plusweek.domain.user.entity;
 
-import com.sparta.plusweek.global.TimeStamp;
+import com.sparta.plusweek.global.timestamp.TimeStamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

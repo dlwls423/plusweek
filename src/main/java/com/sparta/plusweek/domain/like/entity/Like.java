@@ -2,7 +2,7 @@ package com.sparta.plusweek.domain.like.entity;
 
 import com.sparta.plusweek.domain.post.entity.Post;
 import com.sparta.plusweek.domain.user.entity.User;
-import com.sparta.plusweek.global.TimeStamp;
+import com.sparta.plusweek.global.timestamp.TimeStamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

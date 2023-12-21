@@ -1,8 +1,5 @@
-package com.sparta.plusweek.global.config;
+package com.sparta.plusweek.global.security;
 
-import com.sparta.plusweek.global.security.JwtAuthorizationFilter;
-import com.sparta.plusweek.global.security.JwtUtil;
-import com.sparta.plusweek.global.security.UserDetailsServiceImpl;
 import com.sparta.plusweek.global.security.exception.JwtExceptionHandleFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

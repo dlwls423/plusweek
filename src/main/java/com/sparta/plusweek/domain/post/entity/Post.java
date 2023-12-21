@@ -2,7 +2,7 @@ package com.sparta.plusweek.domain.post.entity;
 
 import com.sparta.plusweek.domain.comment.entity.Comment;
 import com.sparta.plusweek.domain.user.entity.User;
-import com.sparta.plusweek.global.TimeStamp;
+import com.sparta.plusweek.global.timestamp.TimeStamp;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

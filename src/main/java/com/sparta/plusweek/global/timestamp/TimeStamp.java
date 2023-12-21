@@ -1,4 +1,4 @@
-package com.sparta.plusweek.global;
+package com.sparta.plusweek.global.timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeStamp {
+
     @CreatedDate
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
