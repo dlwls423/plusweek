@@ -34,17 +34,12 @@ spring:
     username: ${EMAIL_ID}
     password: ${EMAIL_PASSWORD}
     properties:
-      mail:
-        smtp:
-          port: 465
-          auth: true
-          starttls:
-            enable: true
-            required: true
-          socketFactory:
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-            port: 465
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+        ssl:
+          enable: true
 
 jwt:
   secret:

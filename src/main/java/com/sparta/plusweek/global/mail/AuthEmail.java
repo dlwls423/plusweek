@@ -1,34 +1,25 @@
 package com.sparta.plusweek.global.mail;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
-@Entity
-@Table(name = "tb_auth_email")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RedisHash(value = "auth", timeToLive = 300)
 public class AuthEmail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String email;
-    private Boolean isChecked;
+
+    private String code;
 
     @Builder
-    private AuthEmail(String email, Boolean isChecked) {
+    private AuthEmail(String email, String code) {
         this.email = email;
-        this.isChecked = isChecked;
-    }
-
-    public void updateChecked() {
-        this.isChecked = true;
+        this.code = code;
     }
 }

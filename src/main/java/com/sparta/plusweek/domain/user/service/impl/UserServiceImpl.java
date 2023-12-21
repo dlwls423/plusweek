@@ -2,6 +2,7 @@ package com.sparta.plusweek.domain.user.service.impl;
 
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
+import com.sparta.plusweek.domain.user.dto.UserEmailReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
@@ -12,6 +13,7 @@ import com.sparta.plusweek.domain.user.repo.UserRepository;
 import com.sparta.plusweek.domain.user.service.UserService;
 import com.sparta.plusweek.domain.user.service.UserServiceMapper;
 import com.sparta.plusweek.domain.user.validator.UserValidator;
+import com.sparta.plusweek.global.mail.EmailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailUtil emailUtil;
 
     @Override
     public UserConfirmUsernameRes confirmUsername(UserConfirmUsernameReq req) {
         boolean duplicated = userRepository.findByUsername(req.getUsername()) != null;
         return UserConfirmUsernameRes.builder().duplicated(duplicated).build();
+    }
+
+    @Override
+    public void sendMail(UserEmailReq req) {
+        emailUtil.sendMessage(req.getEmail(), "이메일 인증");
     }
 
     @Override

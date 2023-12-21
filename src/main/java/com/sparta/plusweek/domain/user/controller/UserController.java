@@ -2,6 +2,7 @@ package com.sparta.plusweek.domain.user.controller;
 
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameReq;
 import com.sparta.plusweek.domain.user.dto.UserConfirmUsernameRes;
+import com.sparta.plusweek.domain.user.dto.UserEmailReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginReq;
 import com.sparta.plusweek.domain.user.dto.UserLoginRes;
 import com.sparta.plusweek.domain.user.dto.UserSignupReq;
@@ -34,6 +35,12 @@ public class UserController {
         @RequestBody UserConfirmUsernameReq req) {
         UserConfirmUsernameRes res = userService.confirmUsername(req);
         return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @PostMapping("/signup/mail")
+    public ResponseEntity<Void> sendMail(@RequestBody UserEmailReq req) {
+        userService.sendMail(req);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/signup")

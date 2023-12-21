@@ -1,7 +1,7 @@
 package com.sparta.plusweek.global.mail;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface AuthEmailRepository extends JpaRepository<AuthEmail, Long> {
+public interface AuthEmailRepository extends CrudRepository<AuthEmail, String> {
 
 }
