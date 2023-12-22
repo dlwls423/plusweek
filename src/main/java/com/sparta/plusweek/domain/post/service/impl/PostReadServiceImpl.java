@@ -35,7 +35,7 @@ public class PostReadServiceImpl implements PostReadService {
     @Override
     @Transactional
     public PostGetRes getPost(Long postId) {
-        Post post = postRepository.findByPostId(postId);
+        Post post = getPostEntity(postId);
         return PostServiceMapper.INSTANCE.toPostGetRes(post);
     }
 

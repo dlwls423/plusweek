@@ -2,6 +2,7 @@ package com.sparta.plusweek.infra.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,7 @@ public class S3Util {
     private String bucketName;
 
     public String uploadImage(MultipartFile multipartFile) {
-        String fileName = multipartFile.getOriginalFilename();
+        String fileName = createFileName(multipartFile.getOriginalFilename());
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
@@ -45,8 +46,8 @@ public class S3Util {
         return imageUrl.substring(imageUrl.lastIndexOf(".com/") + 5);
     }
 
-//    private String createFileName(String fileName) {
-//        return UUID.randomUUID().toString().concat(fileName);
-//    }
+    private String createFileName(String fileName) {
+        return UUID.randomUUID().toString().concat(fileName);
+    }
 
 }
