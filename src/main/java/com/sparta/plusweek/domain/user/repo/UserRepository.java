@@ -4,7 +4,7 @@ import com.sparta.plusweek.domain.user.entity.User;
 import org.springframework.data.repository.RepositoryDefinition;
 
 @RepositoryDefinition(domainClass = User.class, idClass = Long.class)
-public interface UserRepository extends UserRepositoryCustom {
+public interface UserRepository {
 
     User findByUsername(String username);
 
